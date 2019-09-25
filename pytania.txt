@@ -1,0 +1,1 @@
+1. pętle For in i For of - czy używać i do czego?
