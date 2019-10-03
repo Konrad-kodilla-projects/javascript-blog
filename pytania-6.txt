@@ -1,0 +1,1 @@
+1. Czy w prawdziwych projektach też się najpierw robi statyczną stronę a potem nadpisuje w js?
