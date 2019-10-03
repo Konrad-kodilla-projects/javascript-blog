@@ -5,13 +5,14 @@ const DOM = {
     postTitle: '.post-title',
     titleList: '.titles',
     articleTag: '.post-tags .list',
-    activeTags: 'a.active[href^="#tag-"]'
+    activeTags: 'a.active[href^="#tag-"]',
+    author: '.author-name',
+    activeAuthor: 'a[href^="#author-"]'
 };
 
 
 function titleClickHandler(event) {
     event.preventDefault();
-    // console.log("TCL: titleClickHandler -> event", event);
 
     /* [DONE] remove class 'active' from all article links  */
     const activeLinks = document.querySelectorAll('.titles a.active');
@@ -39,10 +40,10 @@ function titleClickHandler(event) {
 
 
 function generateTitleLinks(selector = '') {
-
     /* remove contents of titleList */
     const linkList = document.querySelector(DOM.titleList);
     linkList.innerHTML = '';
+    
     /* for each article */
     const articles = document.querySelectorAll(DOM.article + selector);
     let html = '';
@@ -129,3 +130,36 @@ function addClickListenersToTags() {
 }
 
 addClickListenersToTags();
+
+
+function generateAuthors() {
+    document.querySelectorAll(DOM.article).forEach(article => {
+        let author = article.getAttribute('data-author');
+        article.querySelector(DOM.author).innerHTML = `<a href="#author-${author}">${author}</a>`;
+    });
+}
+
+generateAuthors();
+
+
+function addClickListenersToAuthors() {
+    document.querySelectorAll('a[href^="#author-"]')
+        .forEach(link => link.addEventListener('click', function authorClickHandler(event) {
+            event.preventDefault();
+
+            const href = this.getAttribute('href');
+            const author = href.replace('#author-', '');
+
+            document.querySelectorAll(DOM.activeAuthor)
+                .forEach(author => author.classList.remove('active'));
+
+            /* add class active */
+            document.querySelectorAll(`a[href="${href}"]`)
+                .forEach(author => author.classList.add('active'));
+
+            /* execute function "generateTitleLinks" with article selector as argument */
+            generateTitleLinks(`[data-author="${author}"]`);
+        }));
+}
+
+addClickListenersToAuthors();
