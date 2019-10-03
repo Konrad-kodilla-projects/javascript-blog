@@ -36,7 +36,7 @@ function generateTitleLinks() {
     linkList.innerHTML = '';
     /* for each article */
     const articles = document.querySelectorAll('.posts .post');
-    let html = ''
+    let html = '';
 
     for (let article of articles) {
         /* get the article id */
@@ -57,7 +57,6 @@ generateTitleLinks();
 
 
 const links = document.querySelectorAll('.titles a');
-console.log("TCL: links", links)
 
 for (let link of links) {
     link.addEventListener('click', titleClickHandler);

@@ -1,1 +1,37 @@
-1. pętle For in i For of - czy używać i do czego?
+1. pętle For in i For of - czy używać i do czego?/ zamiast tej standardowej for (let i =0;...)
+
+2. Prośba żebyś poprawiał mi wszystko co tylko zauważysz że można zrobić lepiej :)
+
+3. Której konwencji przy programowaniu obiektowym się trzymać tej starej czy nowej z instrukcją class?
+
+4. Lepiej jest tworzyć moduły w kodzie przez IIFE czy tworzyć nowe pliki?
+
+5. Do czego jeszcze się używa IIFE?
+
+6. Czy po skończeniu free code camp powinienem coś jeszcze zrobić z JS
+
+7. czego sie używa częściej i do jakich celów -> function x vs const x = () => {} ?
+
+8. jakiś projekt open source albo pomysł na własny projekt?
+
+9. w tym nowym module kodilli chcą żeby ustawić ESLinta na 2 spacje -> zrobić tak czy ustawić sobie 4?
+
+10. czy znajomość algorytmiki jest potrzebna?
+
+11. jakiś pomysł na taki mini projekt żeby poćwiczyć bardziej te obiektowe aspekty?
+
+-----------------------------------------------------------------
+Object keys()
+
+gra online gdzie piszesz => code wars!
+
+strony opensource'owe dostać od Piotra
+
+node.js
+
+APKA
+
+produkty spożywcze i liczysz kalorie
+wyliczone ile wartości odżywczej np w kurczaku jest w innym produkcie
+
+np 100 g = 40g twarogu + do uzupełnienia np 15g białka
