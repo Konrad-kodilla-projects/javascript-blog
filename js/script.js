@@ -13,7 +13,8 @@ const DOM = {
     activeTags: 'a.active[href^="#tag-"]',
     author: '.author-name',
     activeAuthor: 'a[href^="#author-"]',
-    tagsList: '.tags.list'
+    tagsList: '.tags.list',
+    authorList: '.list.authors'
 };
 
 function titleClickHandler(event) {
@@ -54,7 +55,7 @@ function generateTitleLinks(selector = '') {
         /* find the title element */
         /* get the title from the title element */
         const title = article.querySelector(DOM.postTitle).innerHTML;
-        // linkList.insertAdjacentHTML('beforebegin', `<li><a href="#${id}"><span>${title}</span></a></li>`);
+        // linkList.insertAdjacentHTML
         /* create HTML of the link */
         html += `<li><a href="#${id}"><span>${title}</span></a></li>`;
     }
@@ -174,12 +175,27 @@ function addClickListenersToTags() {
 addClickListenersToTags();
 
 function generateAuthors() {
+    let authorsAll = {};
+
     document.querySelectorAll(DOM.article).forEach(article => {
         let author = article.getAttribute('data-author');
         article.querySelector(
             DOM.author
         ).innerHTML = `<a href="#author-${author}">${author}</a>`;
+
+        Object.prototype.hasOwnProperty.call(authorsAll, author)
+            ? authorsAll[author]++
+            : authorsAll[author] = 1;
     });
+
+    let authorsHtml = Object.keys(authorsAll).map(author => {
+        return `<li>
+                    <a href="#author-${author}">
+                        <span class="author-name">${author}</span>
+                    </a>(${authorsAll[author]})
+                </li>`;
+    });
+    document.querySelector(DOM.authorList).innerHTML = authorsHtml.join(' ');
 }
 
 generateAuthors();
