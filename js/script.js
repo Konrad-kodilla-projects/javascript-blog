@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 const opt = {
@@ -14,7 +15,34 @@ const DOM = {
     author: '.author-name',
     activeAuthor: 'a[href^="#author-"]',
     tagsList: '.tags.list',
-    authorList: '.list.authors'
+    authorList: '.list.authors',
+
+    temps: {
+        article: '#template-article-link',
+        tagLink: '#template-tag-link',
+        tagsCloud: '#template-tags-cloud',
+        author: '#template-author',
+        authorList: '#template-author-list'
+    }
+};
+
+const templates = {
+    // eslint-disable-next-line no-undef
+    articleLink: Handlebars.compile(
+        document.querySelector(DOM.temps.article).innerHTML
+    ),
+    tagLink: Handlebars.compile(
+        document.querySelector(DOM.temps.tagLink).innerHTML
+    ),
+    tagsCloud: Handlebars.compile(
+        document.querySelector(DOM.temps.tagsCloud).innerHTML
+    ),
+    author: Handlebars.compile(
+        document.querySelector(DOM.temps.author).innerHTML
+    ),
+    authorList: Handlebars.compile(
+        document.querySelector(DOM.temps.authorList).innerHTML
+    )
 };
 
 function titleClickHandler(event) {
@@ -57,7 +85,10 @@ function generateTitleLinks(selector = '') {
         const title = article.querySelector(DOM.postTitle).innerHTML;
         // linkList.insertAdjacentHTML
         /* create HTML of the link */
-        html += `<li><a href="#${id}"><span>${title}</span></a></li>`;
+
+        // html += `<li><a href="#${id}"><span>${title}</span></a></li>`;
+        const linkHTMLData = { id: id, title: title };
+        html += templates.articleLink(linkHTMLData);
     }
 
     /* insert link into titleList */
@@ -91,45 +122,36 @@ function calculateTagClass(count, param) {
 }
 
 function generateTags() {
-    /* [NEW] create a new variable allTags with an empty object */
     let allTags = {};
-    /* find all articles */
-    /* START LOOP: for every article: */
     document.querySelectorAll(DOM.article).forEach(article => {
-        /* make html variable with empty string */
         let html = '';
 
         /* get tags from data-tags attribute */
-        /* split tags into array */
         article
             .getAttribute('data-tags')
             .split(' ')
             .map(tag => {
-                /* START LOOP: for each tag */
                 /* generate HTML of the link */
-                /* add generated code to html variable */
-                html += `<li><a href="#tag-${tag}">${tag}</a></li>`;
+                html += templates.tagLink({ tag: tag });
 
-                // To mi ESLint wywala jako błąd
+                /* -------- NA ROZMOWE --------------- */
+                // To (ponizej zakomentowane) ESLint mi wywala jako błąd
                 // !allTags.hasOwnProperty(tag) ? allTags[tag] = 1 : allTags[tag]++;
                 !Object.prototype.hasOwnProperty.call(allTags, tag)
                     ? (allTags[tag] = 1)
                     : allTags[tag]++;
-                /* END LOOP: for each tag */
             });
 
-        /* find tags wrapper */
         /* insert HTML of all the links into the tags wrapper */
-        article.querySelector(DOM.articleTag).innerHTML = html;
         /* [NEW] add html from allTags to tagList */
+        article.querySelector(DOM.articleTag).innerHTML = html;
     });
-    /* END LOOP: for every article: */
+
     const tagsParams = calculateTagsParams(allTags);
-    console.log('TCL: generateTags -> tagsParams', tagsParams);
 
     let htmlTags = Object.keys(allTags).map(tag => {
         let tagClass = calculateTagClass(allTags[tag], tagsParams);
-        return `<li><a class="${tagClass}" href="#tag-${tag}">${tag} </a></li>`;
+        return templates.tagsCloud({ tagClass: tagClass, tag: tag });
     });
 
     document.querySelector('.tags').innerHTML = htmlTags.join(' ');
@@ -138,14 +160,9 @@ function generateTags() {
 generateTags();
 
 function tagClickHandler(event) {
-    /* prevent default action for this event */
     event.preventDefault();
 
-    /* make new constant named "clickedElement" and give it the value of "this" */
-    /* make a new constant "href" and read the attribute "href" of the clicked element */
     const href = this.getAttribute('href');
-
-    /* make a new constant "tag" and extract tag from the "href" constant */
     const tag = href.replace('#tag-', '');
 
     /* find all tag links with class active */
@@ -181,19 +198,19 @@ function generateAuthors() {
         let author = article.getAttribute('data-author');
         article.querySelector(
             DOM.author
-        ).innerHTML = `<a href="#author-${author}">${author}</a>`;
+            // ).innerHTML = `<a href="#author-${author}">${author}</a>`;
+        ).innerHTML = templates.author({ author: author });
 
         Object.prototype.hasOwnProperty.call(authorsAll, author)
             ? authorsAll[author]++
-            : authorsAll[author] = 1;
+            : (authorsAll[author] = 1);
     });
 
     let authorsHtml = Object.keys(authorsAll).map(author => {
-        return `<li>
-                    <a href="#author-${author}">
-                        <span class="author-name">${author}</span>
-                    </a>(${authorsAll[author]})
-                </li>`;
+        return templates.authorList({
+            author: author,
+            count: authorsAll[author]
+        });
     });
     document.querySelector(DOM.authorList).innerHTML = authorsHtml.join(' ');
 }

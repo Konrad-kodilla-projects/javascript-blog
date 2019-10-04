@@ -3,3 +3,5 @@
 2. Komentarze w kodzie - jak często i w jakich miejscach bo teraz w tych zadaniach jest chyba za dużo
 
 3. ESLint wywala mi error na "no-prototype-builtins" => czy zmieniać foo.hasOwnProperty("bar"); na Object.prototype.hasOwnProperty.call(foo, "bar");
+
+4. Czy tych szablonów używa się na codzień w projektach czy frameworki mają swoje?
