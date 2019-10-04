@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
 /* Variables */
 /* Global */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -49,7 +51,8 @@ body {
       flex: 2 0 0;
 }
 
-.sidebar, .posts {
+.sidebar,
+.posts {
   background: #fff;
   margin-right: 10px;
   padding: 40px;
@@ -107,5 +110,38 @@ body {
 
 .post-tags p {
   margin: 0 10px 0 0;
+}
+
+/* Tags */
+.list.tags {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.list.tags li {
+  line-height: 1;
+  padding-right: 5px;
+}
+
+.tag-size-1 {
+  font-size: 12px;
+}
+
+.tag-size-2 {
+  font-size: 16px;
+}
+
+.tag-size-3 {
+  font-size: 20px;
+}
+
+.tag-size-4 {
+  font-size: 24px;
+}
+
+.tag-size-5 {
+  font-size: 28px;
 }
 /*# sourceMappingURL=style.css.map */
