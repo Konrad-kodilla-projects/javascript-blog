@@ -137,9 +137,7 @@ function generateTags() {
                 /* -------- NA ROZMOWE --------------- */
                 // To (ponizej zakomentowane) ESLint mi wywala jako błąd
                 // !allTags.hasOwnProperty(tag) ? allTags[tag] = 1 : allTags[tag]++;
-                !Object.prototype.hasOwnProperty.call(allTags, tag)
-                    ? (allTags[tag] = 1)
-                    : allTags[tag]++;
+                allTags[tag] ? allTags[tag]++ : (allTags[tag] = 1);
             });
 
         /* insert HTML of all the links into the tags wrapper */
@@ -201,9 +199,8 @@ function generateAuthors() {
             // ).innerHTML = `<a href="#author-${author}">${author}</a>`;
         ).innerHTML = templates.author({ author: author });
 
-        Object.prototype.hasOwnProperty.call(authorsAll, author)
-            ? authorsAll[author]++
-            : (authorsAll[author] = 1);
+        authorsAll[author] ? authorsAll[author]++ : authorsAll[author] = 1;
+
     });
 
     let authorsHtml = Object.keys(authorsAll).map(author => {
